@@ -12,46 +12,70 @@
     <button onclick="fetchData()">Fetch Data</button>
     <div id="output"></div>
     <button onclick="runCode()">Run Code</button>
+    <button onclick="downloadCode()">Download Code</button>
 
+    <!-- Monaco Editor -->
     <script src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.js"></script>
 
+    <!-- Editor Container -->
     <div id="editor" style="width: 800px; height: 600px;"></div>
+    
+    <!-- Download Button -->
+   
 
     <script>
-      require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs' }});  
-      let editor;
+        // Initialize Monaco Editor
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs' }});  
+        let editor;
 
-      // Initialize Monaco Editor after it has fully loaded
-      require(['vs/editor/editor.main'], function () {
-          editor = monaco.editor.create(document.getElementById('editor'), {
-              value: '// Start coding...',
-              language: 'javascript'
-          });
-      });
+        require(['vs/editor/editor.main'], function () {
+            console.log('Monaco Editor loaded');
+            editor = monaco.editor.create(document.getElementById('editor'), {
+                value: '// Start coding...',
+                language: 'javascript'
+            });
+        });
 
-      // Function to execute the code written in Monaco editor
-      function runCode() {
-          if (editor) { // Check if the editor is initialized
-              const userCode = editor.getValue(); // Get the code from Monaco editor
-              try {
-                  // Only execute the code if it's valid JavaScript
-                  eval(userCode); // Execute the code
-              } catch (error) {
-                  console.error('Error running code:', error);
-                  document.getElementById('output').innerText = 'Error: ' + error.message;
-              }
-          } else {
-              console.error('Editor is not initialized');
-              document.getElementById('output').innerText = 'Error: Monaco Editor not initialized.';
-          }
-      }
+        // Function to download code written in Monaco editor
+        function downloadCode() {
+            const userCode = editor ? editor.getValue() : 'console.log("Hello, world!")'; // Default to test code if Monaco isn't ready
+            const blob = new Blob([userCode], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'code-snippet.js';
+            link.click();
+        }
 
-      // Optional: function to fetch data, just a placeholder for your backend or mock data
-      async function fetchData() {
-          const response = await fetch("/api/data");
-          const data = await response.json();
-          document.getElementById("output").innerHTML = JSON.stringify(data);
-      }
+        // Function to run the code from Monaco editor
+        function runCode() {
+            if (editor) {
+                const userCode = editor.getValue(); 
+                try {
+                    const result = new Function(userCode)(); // Using Function constructor to safely execute the code
+                    document.getElementById('output').innerText = result;
+                } catch (error) {
+                    console.error('Error running code:', error);
+                    document.getElementById('output').innerText = 'Error: ' + error.message;
+                }
+            } else {
+                console.error('Editor is not initialized');
+                document.getElementById('output').innerText = 'Error: Monaco Editor not initialized.';
+            }
+        }
+
+        // Function to fetch data (for demonstration purposes)
+        async function fetchData() {
+            try {
+                const response = await fetch("/api/data");
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const data = await response.json();
+                document.getElementById("output").innerHTML = JSON.stringify(data);
+            } catch (error) {
+                document.getElementById("output").innerText = 'Error fetching data: ' + error.message;
+            }
+        }
     </script>
 </body>
 </html>
