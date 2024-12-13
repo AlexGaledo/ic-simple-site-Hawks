@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "monaco-editor": "^0.52.2"
+  },
+  "name": "icp-simple-site",
+  "version": "1.0.0",
+  "description": "This template gives you everything you need to build a full-stack Web3 application on the [Internet Computer](https://internetcomputer.org/). It includes a frontend built with Vite and React, and a backend written in JS/TS (Azle).",
+  "main": "index.js",
+  "devDependencies": {
+    "vite": "^4.0.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

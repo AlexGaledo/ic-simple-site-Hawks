@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICP Simple Site</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Optional: Add styles if necessary -->
+</head>
+<body>
+    <h1>Welcome to ICP Simple Site!</h1>
+    <p>This is a basic example of a frontend running on the Internet Computer.</p>
+    <button onclick="fetchData()">Fetch Data</button>
+    <div id="output"></div>
+    <button onclick="runCode()">Run Code</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.js"></script>
+
+    <div id="editor" style="width: 800px; height: 600px;"></div>
+
+    <script>
+      require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs' }});  
+      let editor;
+
+      // Initialize Monaco Editor after it has fully loaded
+      require(['vs/editor/editor.main'], function () {
+          editor = monaco.editor.create(document.getElementById('editor'), {
+              value: '// Start coding...',
+              language: 'javascript'
+          });
+      });
+
+      // Function to execute the code written in Monaco editor
+      function runCode() {
+          if (editor) { // Check if the editor is initialized
+              const userCode = editor.getValue(); // Get the code from Monaco editor
+              try {
+                  // Only execute the code if it's valid JavaScript
+                  eval(userCode); // Execute the code
+              } catch (error) {
+                  console.error('Error running code:', error);
+                  document.getElementById('output').innerText = 'Error: ' + error.message;
+              }
+          } else {
+              console.error('Editor is not initialized');
+              document.getElementById('output').innerText = 'Error: Monaco Editor not initialized.';
+          }
+      }
+
+      // Optional: function to fetch data, just a placeholder for your backend or mock data
+      async function fetchData() {
+          const response = await fetch("/api/data");
+          const data = await response.json();
+          document.getElementById("output").innerHTML = JSON.stringify(data);
+      }
+    </script>
+</body>
+</html>

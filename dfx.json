@@ -2,9 +2,9 @@
   "canisters": {
     "icp_simple_site": {
       "frontend": {
-        "entrypoint": "src/index.html"
+        "entrypoint": "hawks/index.html"
       },
-      "source": ["src"],
+      "source": ["hawks"],
       "type": "assets"
     }
   },
@@ -12,7 +12,7 @@
   "version": 1,
   "networks": {
     "local": {
-      "bind": "0.0.0.0:8000",
+      "bind": "0.0.0.0:8080",
       "type": "ephemeral"
     }
   }
