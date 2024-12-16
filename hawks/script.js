@@ -31,7 +31,9 @@ require(['vs/editor/editor.main'], function () {
         language: 'javascript',
         theme: 'neon'
     });
+
 });
+
 
 function downloadCode() {
     const userCode = editor ? editor.getValue() : 'console.log("Hello, world!")';

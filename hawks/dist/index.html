@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICP Simple Site</title>
+    
+  <link rel="stylesheet" href="/assets/index-b1220b65.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>File Explorer</h2>
+        <button onclick="fetchData()">Fetch Data</button>
+        <button onclick="runCode()">Run Code</button>
+        <button onclick="downloadCode()">Download Code</button>
+    </div>
+
+    <div class="content">
+        <h1>Welcome to ICP Simple Site!</h1>
+        <p>This is a basic example of a frontend running on the Internet Computer.</p>
+        <div class="file-and-output">
+            <div id="editor"></div>
+            <div id="output">
+                <h3>Output</h3>
+                <p id="outputText">Output will appear here...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
